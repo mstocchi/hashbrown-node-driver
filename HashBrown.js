@@ -34,7 +34,7 @@ class HashBrown {
      * @return {String} path
      */
     static getPath(folder = '') {
-        return path.dirname(require.main.filename) + '/hashbrown/' + folder;
+        return path.dirname(require.main.filename) + path.sep +'hashbrown'+ path.sep + folder;
     }
     
     /**
@@ -45,7 +45,7 @@ class HashBrown {
      * @return {String} path
      */
     static getRootPath(folder = '') {
-        return path.dirname(require.main.filename) + '/' + folder;
+        return path.dirname(require.main.filename) + path.sep + folder;
     }
 
     /**
@@ -93,18 +93,18 @@ class HashBrown {
      */
     static ensureLocations() {
         // JSON
-        let jsonPath = this.getPath('storage/json');
+        let jsonPath = this.getPath('storage' + path.sep + 'json');
         
-        if(!fs.existsSync(jsonPath + '/tree.json')) {
+        if(!fs.existsSync(jsonPath + path.sep + 'tree.json')) {
             if(!fs.existsSync(jsonPath)) {
                 this.mkdirRecursively(jsonPath);
             }
             
-            fs.writeFileSync(jsonPath + '/tree.json', '{}');
+            fs.writeFileSync(jsonPath + path.sep + 'tree.json', '{}');
         }
         
         // Media
-        let mediaPath = this.getPath('storage/media');
+        let mediaPath = this.getPath('storage' + path.sep + 'media');
 
         if(!fs.existsSync(mediaPath)) {
             this.mkdirRecursively(mediaPath);
@@ -125,7 +125,7 @@ class HashBrown {
         if(!fs.existsSync(dirPath)) { return; }
 
         fs.readdirSync(dirPath).forEach((file,index) => {
-            var filePath = dirPath + "/" + file;
+            var filePath = dirPath + path.sep + file;
             
             // Recurse if file is directory
             if(fs.lstatSync(filePath).isDirectory()) {
