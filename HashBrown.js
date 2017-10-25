@@ -147,10 +147,14 @@ class HashBrown {
      * @param {String} dirPath
      */
     static mkdirRecursively(dirPath) {
-        let parents = dirPath.split('/');
-        let finalPath = '/';
+        let parents = dirPath.split(path.sep);
+        let finalPath = path.sep;
 
         for(let i in parents) {
+
+            if(parents[i].indexOf(':')>=0)
+                continue;
+
             finalPath += parents[i];
 
             if(!fs.existsSync(finalPath)) {
@@ -158,7 +162,7 @@ class HashBrown {
             }
 
             if(i < parents.length - 1) {
-                finalPath += '/';
+                finalPath += path.sep;
             }
         }
     }
